@@ -7,6 +7,9 @@ import { saveReport } from '@/lib/reportStore';
 import StepIndicator from '@/components/analysis/StepIndicator';
 import BirthForm from '@/components/analysis/BirthForm';
 import BaziChart from '@/components/chart/BaziChart';
+import WuXingCircle from '@/components/chart/WuXingCircle';
+import DaYunChart from '@/components/chart/DaYunChart';
+import LiuNianChart from '@/components/chart/LiuNianChart';
 import AnalysisLoading from '@/components/analysis/AnalysisLoading';
 import VisualReport from '@/components/analysis/VisualReport';
 import Link from 'next/link';
@@ -123,6 +126,9 @@ export default function AnalysisPage() {
           <div>
             <h2 className="text-center text-amber-300 text-xl font-bold mb-6">確認命盤</h2>
             <BaziChart chartData={state.chartData} />
+            <div className="mt-6"><WuXingCircle chartData={state.chartData} /></div>
+            <div className="mt-6"><DaYunChart chartData={state.chartData} /></div>
+            <div className="mt-6"><LiuNianChart chartData={state.chartData} /></div>
             <div className="flex gap-3 justify-center mt-8">
               <button onClick={() => dispatch({ type: 'SET_STEP', step: 1 })} className="px-6 py-2.5 rounded-lg border border-amber-700/30 text-amber-500 text-sm">← 修改</button>
               <button onClick={handleAnalyze} className="px-8 py-2.5 rounded-lg bg-gradient-to-r from-amber-600/80 to-yellow-600/80 text-white font-bold text-sm shadow-lg shadow-amber-900/20">☰ AI 深度分析</button>
