@@ -148,7 +148,11 @@ export interface AnalysisResult {
   tenGodsHighlights: Array<{
     god: string;
     strength: string;
-    meaning: string;
+    emoji?: string;
+    oneLiner?: string;
+    personality?: string;
+    advice?: string;
+    meaning?: string; // backward compat
   }>;
   patterns: Array<{
     name: string;

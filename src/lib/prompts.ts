@@ -50,7 +50,14 @@ ${MODERN_PRINCIPLES}
     "advice": "五行調和建議"
   },
   "tenGodsHighlights": [
-    { "god": "十神名", "strength": "旺/弱/適中", "meaning": "在現代生活中的具體含義" }
+    {
+      "god": "十神名",
+      "strength": "旺/中等偏旺/適中/弱",
+      "emoji": "對應emoji",
+      "oneLiner": "一句大白話翻譯（如：好勝心強、錢容易留不住）",
+      "personality": "個性面的影響（1-2句，像朋友聊天的口吻，不要學術腔）",
+      "advice": "實際建議（1句，具體到行動層面，如：不要跟人合夥投資、適合走技術路線）"
+    }
   ],
   "patterns": [
     { "name": "格局名", "type": "high-energy 或 stable", "effect": "效果", "tip": "如何運用" }

@@ -99,17 +99,50 @@ export default function VisualReport({ data }: { data: AnalysisResult }) {
       {/* Ten Gods */}
       {data.tenGodsHighlights?.length > 0 && (
         <div className="bg-amber-950/40 border border-amber-800/20 rounded-2xl p-6">
-          <h3 className="text-amber-300 font-bold text-center mb-4">十神亮點</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {data.tenGodsHighlights.map((tg, i) => (
-              <div key={i} className={`rounded-xl p-3 border ${SHISHEN_BG[tg.god] || 'border-amber-800/20'}`}>
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-amber-300 text-sm font-bold">{tg.god}</span>
-                  <span className="text-[10px] text-amber-500/60">{tg.strength}</span>
+          <h3 className="text-amber-300 font-bold text-center mb-2">🔮 十神亮點</h3>
+          <p className="text-[#8C7A62] text-xs text-center mb-5">十神就是你性格裡的「不同角色設定」，以下是你命盤中最重要的幾個：</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {data.tenGodsHighlights.map((tg, i) => {
+              const strengthColor = tg.strength?.includes('旺') ? 'text-[#C9A84C]' : tg.strength?.includes('弱') ? 'text-[#8C7A62]' : 'text-amber-300';
+              return (
+                <div key={i} className={`rounded-xl p-4 border ${SHISHEN_BG[tg.god] || 'border-amber-800/20 bg-amber-900/10'}`}>
+                  {/* Header: name + strength */}
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      {tg.emoji && <span className="text-lg">{tg.emoji}</span>}
+                      <span className="text-amber-300 font-bold text-base">{tg.god}</span>
+                    </div>
+                    <span className={`text-xs font-bold ${strengthColor}`}>{tg.strength}</span>
+                  </div>
+
+                  {/* One-liner */}
+                  {tg.oneLiner && (
+                    <p className="text-amber-200 text-sm font-medium mb-2">👉 {tg.oneLiner}</p>
+                  )}
+
+                  {/* Personality */}
+                  {tg.personality && (
+                    <div className="mb-2">
+                      <span className="text-[10px] text-[#8C7A62]">個性：</span>
+                      <p className="text-amber-200/70 text-xs leading-relaxed">{tg.personality}</p>
+                    </div>
+                  )}
+
+                  {/* Advice */}
+                  {tg.advice && (
+                    <div className="bg-amber-500/5 rounded-lg px-3 py-2 border border-amber-500/10">
+                      <span className="text-amber-400 text-[10px] font-bold">💡 建議：</span>
+                      <span className="text-amber-200/70 text-xs ml-1">{tg.advice}</span>
+                    </div>
+                  )}
+
+                  {/* Fallback for old format */}
+                  {!tg.oneLiner && tg.meaning && (
+                    <p className="text-amber-200/70 text-xs">{tg.meaning}</p>
+                  )}
                 </div>
-                <p className="text-amber-200/70 text-xs">{tg.meaning}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
