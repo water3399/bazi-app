@@ -7,25 +7,25 @@ interface AnalysisLoadingProps {
 }
 
 const CHART_STAGES = [
-  { text: '載入命盤資料...', duration: 3000 },
-  { text: '匹配知識庫星曜特質...', duration: 5000 },
-  { text: '分析十二宮位格局...', duration: 8000 },
-  { text: '解讀四化飛星互動...', duration: 10000 },
-  { text: '生成性格與事業分析...', duration: 15000 },
-  { text: '整合大限流年運勢...', duration: 20000 },
-  { text: '撰寫完整報告中...', duration: 30000 },
-  { text: '報告即將完成...', duration: 45000 },
+  { text: '☰ 載入四柱命盤資料...', duration: 3000 },
+  { text: '📚 查閱穷通宝典、三命通会...', duration: 5000 },
+  { text: '🔍 分析日主旺衰與十神...', duration: 8000 },
+  { text: '⚖️ 判定格局與用神...', duration: 10000 },
+  { text: '🌿 解讀五行生剋互動...', duration: 15000 },
+  { text: '📅 整合大運流年運勢...', duration: 20000 },
+  { text: '✍️ 撰寫完整報告中...', duration: 30000 },
+  { text: '✨ 報告即將完成...', duration: 45000 },
 ];
 
 const FORTUNE_STAGES = [
-  { text: '載入流年資料...', duration: 2000 },
-  { text: '計算大限 × 流年交互...', duration: 5000 },
-  { text: '分析 1-3 月流月宮位...', duration: 10000 },
-  { text: '分析 4-6 月流月宮位...', duration: 18000 },
-  { text: '分析 7-9 月流月宮位...', duration: 28000 },
-  { text: '分析 10-12 月流月宮位...', duration: 38000 },
-  { text: '整合全年運勢走勢...', duration: 50000 },
-  { text: '報告即將完成...', duration: 65000 },
+  { text: '📅 載入流年干支資料...', duration: 2000 },
+  { text: '⚖️ 計算大運 × 流年十神互動...', duration: 5000 },
+  { text: '🌸 分析正月至三月流月...', duration: 10000 },
+  { text: '☀️ 分析四月至六月流月...', duration: 18000 },
+  { text: '🍂 分析七月至九月流月...', duration: 28000 },
+  { text: '❄️ 分析十月至臘月流月...', duration: 38000 },
+  { text: '📊 整合全年運勢走勢...', duration: 50000 },
+  { text: '✨ 報告即將完成...', duration: 65000 },
 ];
 
 export default function AnalysisLoading({ type = 'chart' }: AnalysisLoadingProps) {
