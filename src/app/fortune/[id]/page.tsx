@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getReport } from '@/lib/reportStore';
+import { useLang } from '@/lib/langContext';
 import { generateYearlyFortune, formatFortuneContext, type YearlyFortune } from '@/lib/bazi/fortune';
 import { formatChartText } from '@/lib/bazi/engine';
 import type { StoredReport } from '@/lib/bazi/types';
@@ -30,6 +31,7 @@ export default function FortunePage() {
   const [fortuneData, setFortuneData] = useState<FortuneData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [expandedMonth, setExpandedMonth] = useState<number | null>(null);
+  const { langPrompt } = useLang();
 
   useEffect(() => { setReport(getReport(id)); }, [id]);
   useEffect(() => { if (report) { setFortune(generateYearlyFortune(report.birthData, selectedYear)); setFortuneData(null); setExpandedMonth(null); } }, [report, selectedYear]);
@@ -40,7 +42,7 @@ export default function FortunePage() {
     try {
       const chartCtx = formatChartText(report.chartData).substring(0, 3000);
       const fortuneCtx = formatFortuneContext(fortune, report.birthData);
-      const res = await fetch('/api/fortune', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chartContext: chartCtx, fortuneContext: fortuneCtx }) });
+      const res = await fetch('/api/fortune', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chartContext: `${langPrompt}\n\n${chartCtx}`, fortuneContext: fortuneCtx }) });
       if (!res.ok) { const d = await res.json(); throw new Error(d.error); }
       const data = await res.json();
       setFortuneData(data.fortune);

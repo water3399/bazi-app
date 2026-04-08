@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { LangProvider } from '@/lib/langContext';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -25,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body className="antialiased bg-[#0f0a05] text-amber-100 min-h-screen" style={{ fontFamily: "'Noto Sans TC', sans-serif" }}>
-        {children}
+        <LangProvider>{children}</LangProvider>
       </body>
     </html>
   );

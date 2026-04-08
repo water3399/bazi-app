@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { getReport } from '@/lib/reportStore';
 import { formatChartText } from '@/lib/bazi/engine';
+import { useLang } from '@/lib/langContext';
 import type { StoredReport, AnalysisResult } from '@/lib/bazi/types';
 import BaziChart from '@/components/chart/BaziChart';
 import VisualReport from '@/components/analysis/VisualReport';
@@ -31,6 +32,7 @@ export default function ChatPage() {
   const [streamContent, setStreamContent] = useState('');
   const [sidebarTab, setSidebarTab] = useState<'chart' | 'report'>('report');
   const endRef = useRef<HTMLDivElement>(null);
+  const { lang, setLang, langLabel, langPrompt } = useLang();
 
   useEffect(() => {
     const r = getReport(id);
@@ -45,7 +47,7 @@ export default function ChatPage() {
     const updated = [...messages, userMsg];
     setMessages(updated); setInput(''); setStreaming(true); setStreamContent('');
     try {
-      const reportContext = `${formatChartText(report.chartData)}\n\n【分析報告摘要】\n${report.analysisJson.substring(0, 2000)}`;
+      const reportContext = `${langPrompt}\n\n${formatChartText(report.chartData)}\n\n【分析報告摘要】\n${report.analysisJson.substring(0, 2000)}`;
       const res = await fetch('/api/chat', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: updated.map(m => ({ role: m.role, content: m.content })), reportContext }),
@@ -68,7 +70,11 @@ export default function ChatPage() {
       <header className="border-b border-amber-700/20 bg-amber-950/20 shrink-0">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="text-amber-400 font-bold">☰ 命理八字</Link>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
+            <button onClick={() => setLang(lang === 'zh-TW' ? 'zh-CN' : 'zh-TW')}
+              className="px-2 py-1 rounded-lg border border-amber-700/30 text-amber-500 text-[10px] hover:border-amber-500/50">
+              🌐 {langLabel}
+            </button>
             <Link href={`/analysis/${id}`} className="px-3 py-1.5 rounded-lg border border-amber-700/30 text-amber-500 text-xs">📄 報告</Link>
             <Link href={`/fortune/${id}`} className="px-3 py-1.5 rounded-lg border border-amber-700/30 text-amber-500 text-xs">📅 流年</Link>
           </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useReducer, useCallback } from 'react';
+import { useLang } from '@/lib/langContext';
 import type { AnalysisState, AnalysisAction, BirthData } from '@/lib/bazi/types';
 import { generateChart, formatChartText } from '@/lib/bazi/engine';
 import { saveReport } from '@/lib/reportStore';
@@ -38,6 +39,7 @@ function reducer(state: AnalysisState, action: AnalysisAction): AnalysisState {
 
 export default function AnalysisPage() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { lang, setLang, langLabel, langPrompt } = useLang();
 
   const handleGenerate = useCallback(() => {
     dispatch({ type: 'GENERATE_CHART_START' });
@@ -83,7 +85,7 @@ export default function AnalysisPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          context,
+          context: `${langPrompt}\n\n${context}`,
           dayGan: chart.dayMaster,
           shiShenList,
           ganZhiList,
@@ -106,7 +108,15 @@ export default function AnalysisPage() {
       <header className="border-b border-amber-700/20 bg-amber-950/20">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="text-amber-400 font-bold text-lg hover:text-amber-300">☰ 命理八字</Link>
-          {state.step > 1 && <button onClick={() => dispatch({ type: 'RESET' })} className="text-amber-500 text-sm hover:text-amber-400">重新排盤</button>}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setLang(lang === 'zh-TW' ? 'zh-CN' : 'zh-TW')}
+              className="px-2.5 py-1 rounded-lg border border-amber-700/30 text-amber-500 text-xs hover:border-amber-500/50 transition-all"
+            >
+              🌐 {langLabel}
+            </button>
+            {state.step > 1 && <button onClick={() => dispatch({ type: 'RESET' })} className="text-amber-500 text-sm hover:text-amber-400">重新排盤</button>}
+          </div>
         </div>
       </header>
 
