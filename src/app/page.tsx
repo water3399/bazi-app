@@ -13,10 +13,16 @@ export default function Home() {
           <p className="text-amber-500/60 text-sm mb-10 max-w-md mx-auto">
             結合 lunar-typescript 精準排盤、穷通宝典等九本古典知識庫與 AI 深度解讀，以現代視角為你揭示命格密碼
           </p>
-          <Link href="/analysis"
-            className="inline-block px-10 py-4 rounded-xl bg-gradient-to-r from-amber-600/80 to-yellow-600/80 text-white font-bold text-lg hover:from-amber-500/80 hover:to-yellow-500/80 transition-all shadow-xl shadow-amber-900/30">
-            ☰ 開始排盤分析
-          </Link>
+          <div className="flex gap-4 flex-wrap justify-center">
+            <Link href="/analysis"
+              className="px-10 py-4 rounded-xl bg-gradient-to-r from-amber-600/80 to-yellow-600/80 text-white font-bold text-lg hover:from-amber-500/80 hover:to-yellow-500/80 transition-all shadow-xl shadow-amber-900/30">
+              ☰ 個人排盤分析
+            </Link>
+            <Link href="/synastry"
+              className="px-10 py-4 rounded-xl bg-gradient-to-r from-amber-700/60 to-amber-800/60 text-amber-200 font-bold text-lg hover:from-amber-600/60 hover:to-amber-700/60 transition-all shadow-xl shadow-amber-900/30 border border-amber-600/30">
+              🤝 合盤分析
+            </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 max-w-3xl w-full">
