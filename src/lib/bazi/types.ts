@@ -197,10 +197,16 @@ export interface AnalysisResult {
     advice: string;
   };
   lifePath: {
-    summary: string;
-    strengths: string[];
-    growthAreas: string[];
-    bestCareers: string[];
+    title?: string;
+    mainAxis?: string;
+    weapons?: Array<{ emoji: string; label: string; desc: string }>;
+    bossFights?: Array<{ emoji: string; label: string; desc: string }>;
+    battlefields?: Array<{ emoji: string; label: string; desc: string }>;
+    // backward compat
+    summary?: string;
+    strengths?: string[];
+    growthAreas?: string[];
+    bestCareers?: string[];
   };
 }
 

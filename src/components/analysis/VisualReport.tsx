@@ -360,29 +360,108 @@ export default function VisualReport({ data }: { data: AnalysisResult }) {
 
       {/* Life Path */}
       {data.lifePath && (
-        <div className="bg-amber-950/40 border border-amber-600/30 rounded-2xl p-6">
-          <h3 className="text-amber-300 font-bold text-center mb-4">人生藍圖</h3>
-          <p className="text-amber-200/70 text-sm text-center mb-6 max-w-lg mx-auto">{data.lifePath.summary}</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <div className="text-emerald-400 text-xs font-bold mb-2 text-center">✦ 核心優勢</div>
-              {data.lifePath.strengths.map((s, i) => (
-                <div key={i} className="bg-emerald-500/5 rounded-lg px-3 py-2 text-xs text-amber-200 border border-emerald-500/10 mb-1.5">{s}</div>
-              ))}
-            </div>
-            <div>
-              <div className="text-orange-400 text-xs font-bold mb-2 text-center">✦ 成長方向</div>
-              {data.lifePath.growthAreas.map((s, i) => (
-                <div key={i} className="bg-orange-500/5 rounded-lg px-3 py-2 text-xs text-amber-200 border border-orange-500/10 mb-1.5">{s}</div>
-              ))}
-            </div>
-            <div>
-              <div className="text-sky-400 text-xs font-bold mb-2 text-center">✦ 適合職業</div>
-              {data.lifePath.bestCareers.map((s, i) => (
-                <div key={i} className="bg-sky-500/5 rounded-lg px-3 py-2 text-xs text-amber-200 border border-sky-500/10 mb-1.5">{s}</div>
-              ))}
-            </div>
-          </div>
+        <div className="bg-gradient-to-br from-amber-900/20 to-amber-950/50 border border-amber-600/30 rounded-2xl p-6">
+          <h3 className="text-amber-300 font-bold text-center mb-2">🗺️ 人生藍圖</h3>
+
+          {/* New format */}
+          {data.lifePath.title && (
+            <>
+              {/* Title */}
+              <div className="text-center mb-4">
+                <span className="text-amber-200 text-lg font-bold">{data.lifePath.title}</span>
+              </div>
+
+              {/* Main Axis */}
+              {data.lifePath.mainAxis && (
+                <div className="bg-[#2A2018] rounded-xl p-4 border border-amber-700/20 mb-6 max-w-2xl mx-auto">
+                  <p className="text-amber-200/80 text-sm leading-relaxed">{data.lifePath.mainAxis}</p>
+                </div>
+              )}
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {/* Weapons */}
+                {data.lifePath.weapons && data.lifePath.weapons.length > 0 && (
+                  <div>
+                    <div className="text-[#5B9E7A] text-sm font-bold mb-3 text-center">⚔️ 神級武器</div>
+                    <div className="space-y-2">
+                      {data.lifePath.weapons.map((w, i) => (
+                        <div key={i} className="bg-[#5B9E7A]/5 rounded-xl p-3 border border-[#5B9E7A]/15">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <span>{w.emoji}</span>
+                            <span className="text-[#5B9E7A] text-xs font-bold">{w.label}</span>
+                          </div>
+                          <p className="text-amber-200/60 text-xs leading-relaxed">{w.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Boss Fights */}
+                {data.lifePath.bossFights && data.lifePath.bossFights.length > 0 && (
+                  <div>
+                    <div className="text-[#D4856A] text-sm font-bold mb-3 text-center">🎮 要破的關</div>
+                    <div className="space-y-2">
+                      {data.lifePath.bossFights.map((b, i) => (
+                        <div key={i} className="bg-[#D4856A]/5 rounded-xl p-3 border border-[#D4856A]/15">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <span>{b.emoji}</span>
+                            <span className="text-[#D4856A] text-xs font-bold">{b.label}</span>
+                          </div>
+                          <p className="text-amber-200/60 text-xs leading-relaxed">{b.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Battlefields */}
+                {data.lifePath.battlefields && data.lifePath.battlefields.length > 0 && (
+                  <div>
+                    <div className="text-[#6B8DB5] text-sm font-bold mb-3 text-center">🎯 終極戰場</div>
+                    <div className="space-y-2">
+                      {data.lifePath.battlefields.map((bf, i) => (
+                        <div key={i} className="bg-[#6B8DB5]/5 rounded-xl p-3 border border-[#6B8DB5]/15">
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <span>{bf.emoji}</span>
+                            <span className="text-[#6B8DB5] text-xs font-bold">{bf.label}</span>
+                          </div>
+                          <p className="text-amber-200/60 text-xs leading-relaxed">{bf.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Fallback: old format */}
+          {!data.lifePath.title && data.lifePath.summary && (
+            <>
+              <p className="text-amber-200/70 text-sm text-center mb-6 max-w-lg mx-auto">{data.lifePath.summary}</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <div className="text-[#5B9E7A] text-xs font-bold mb-2 text-center">✦ 核心優勢</div>
+                  {data.lifePath.strengths?.map((s, i) => (
+                    <div key={i} className="bg-[#5B9E7A]/5 rounded-lg px-3 py-2 text-xs text-amber-200 border border-[#5B9E7A]/10 mb-1.5">{s}</div>
+                  ))}
+                </div>
+                <div>
+                  <div className="text-[#D4856A] text-xs font-bold mb-2 text-center">✦ 成長方向</div>
+                  {data.lifePath.growthAreas?.map((s, i) => (
+                    <div key={i} className="bg-[#D4856A]/5 rounded-lg px-3 py-2 text-xs text-amber-200 border border-[#D4856A]/10 mb-1.5">{s}</div>
+                  ))}
+                </div>
+                <div>
+                  <div className="text-[#6B8DB5] text-xs font-bold mb-2 text-center">✦ 適合職業</div>
+                  {data.lifePath.bestCareers?.map((s, i) => (
+                    <div key={i} className="bg-[#6B8DB5]/5 rounded-lg px-3 py-2 text-xs text-amber-200 border border-[#6B8DB5]/10 mb-1.5">{s}</div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
