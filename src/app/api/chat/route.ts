@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     if (!messages?.length) return new Response(JSON.stringify({ error: '缺少對話' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
 
     const stream = streamMiniMax({
-      model: 'MiniMax-M2.7',
+      model: 'MiniMax-M2.7-highspeed',
       messages: [
         { role: 'system', content: `${CHAT_SYSTEM_PROMPT}\n\n===== 用戶命盤 =====\n${reportContext}` },
         ...messages,

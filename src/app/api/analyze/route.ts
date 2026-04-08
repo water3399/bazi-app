@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
       : context;
 
     const rawContent = await callMiniMax({
-      model: 'MiniMax-M2.7',
+      model: 'MiniMax-M2.7-highspeed',
       temperature: 0.3,
       max_tokens: 12000,
       messages: [

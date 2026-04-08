@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     if (!context) return NextResponse.json({ error: '缺少合盤資料' }, { status: 400 });
 
     const rawContent = await callMiniMax({
-      model: 'MiniMax-M2.7',
+      model: 'MiniMax-M2.7-highspeed',
       temperature: 0.3,
       max_tokens: 4000,
       messages: [
