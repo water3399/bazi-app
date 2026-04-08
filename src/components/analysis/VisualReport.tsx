@@ -177,11 +177,34 @@ export default function VisualReport({ data }: { data: AnalysisResult }) {
       )}
 
       {/* ===== Branch Relations (刑沖合害) ===== */}
-      {data.branchRelations && (
+      {Array.isArray(data.branchRelations) && data.branchRelations.length > 0 && (
         <div className="bg-amber-950/40 border border-amber-800/20 rounded-2xl p-6">
-          <h3 className="text-amber-300 font-bold text-center mb-3">⚡ 刑沖合害</h3>
-          <p className="text-amber-200/70 text-sm text-center mb-2">{data.branchRelations.summary}</p>
-          <p className="text-amber-400/50 text-xs text-center">💡 {data.branchRelations.impact}</p>
+          <h3 className="text-amber-300 font-bold text-center mb-2">⚡ 刑沖合害</h3>
+          <p className="text-[#8C7A62] text-xs text-center mb-5">四柱地支之間的化學反應：合=助力、沖=轉折、刑=磨練、害=需要溝通</p>
+          <div className="space-y-4">
+            {(data.branchRelations as Array<{type: string; pillars: string; emoji: string; whatItMeans: string; realLifeImpact: string; advice: string}>).map((br, i) => {
+              const levelColor = br.type === '合' || br.type === '三合' || br.type === '半合'
+                ? 'border-[#5B9E7A]/30 bg-[#5B9E7A]/5'
+                : br.type === '沖' || br.type === '刑'
+                  ? 'border-[#D4856A]/30 bg-[#D4856A]/5'
+                  : 'border-amber-700/20 bg-amber-900/10';
+              return (
+                <div key={i} className={`rounded-xl p-4 border ${levelColor}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-lg">{br.emoji || '⚡'}</span>
+                    <span className="text-amber-300 font-bold text-sm">{br.pillars}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-800/30 text-amber-400 border border-amber-700/20">{br.type}</span>
+                  </div>
+                  <p className="text-amber-200/80 text-sm font-medium mb-2">{br.whatItMeans}</p>
+                  <p className="text-amber-200/60 text-xs leading-relaxed mb-2">{br.realLifeImpact}</p>
+                  <div className="bg-amber-500/5 rounded-lg px-3 py-2 border border-amber-500/10">
+                    <span className="text-amber-400 text-[10px] font-bold">💡 建議：</span>
+                    <span className="text-amber-200/70 text-xs ml-1">{br.advice}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 

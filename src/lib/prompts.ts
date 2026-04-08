@@ -109,10 +109,16 @@ ${MODERN_PRINCIPLES}
       "advice": "一句話建議"
     }
   },
-  "branchRelations": {
-    "summary": "刑沖合害的綜合解讀（2句話）",
-    "impact": "對人生的主要影響"
-  },
+  "branchRelations": [
+    {
+      "type": "沖/合/刑/害/三合/半合",
+      "pillars": "年酉 沖 月卯",
+      "emoji": "⚡",
+      "whatItMeans": "用最白話的方式解釋這是什麼（1句話，像跟朋友聊天一樣）",
+      "realLifeImpact": "具體在生活中會怎樣表現（2-3句話，舉例說明）",
+      "advice": "怎麼應對或善用這個能量（1句話）"
+    }
+  ],
   "shenSha": {
     "highlights": ["最重要的3-5個神煞及其現代含義"],
     "summary": "神煞系統的綜合解讀（1句話）"

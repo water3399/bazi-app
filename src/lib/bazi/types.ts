@@ -161,10 +161,14 @@ export interface AnalysisResult {
     title: string;
     [key: string]: unknown;
   }>;
-  branchRelations?: {
-    summary: string;
-    impact: string;
-  };
+  branchRelations?: Array<{
+    type: string;
+    pillars: string;
+    emoji: string;
+    whatItMeans: string;
+    realLifeImpact: string;
+    advice: string;
+  }>;
   shenSha?: {
     highlights: string[];
     summary: string;
