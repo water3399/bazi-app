@@ -173,10 +173,9 @@ export default function ChatPage() {
                 {analysis.lifePath && (
                   <div className="bg-amber-950/30 border border-amber-800/20 rounded-xl p-3">
                     <div className="text-amber-400 text-xs font-bold mb-2">人生藍圖</div>
-                    <p className="text-amber-200/60 text-xs mb-2">{analysis.lifePath.summary}</p>
-                    <div className="text-amber-300/60 text-[10px]">
-                      適合：{analysis.lifePath.bestCareers.join('、')}
-                    </div>
+                    <p className="text-amber-200/60 text-xs mb-2">{analysis.lifePath.title || analysis.lifePath.summary}</p>
+                    {analysis.lifePath.mainAxis && <p className="text-amber-300/60 text-[10px]">{analysis.lifePath.mainAxis}</p>}
+                    {analysis.lifePath.bestCareers && <div className="text-amber-300/60 text-[10px]">適合：{analysis.lifePath.bestCareers.join('、')}</div>}
                   </div>
                 )}
               </div>
