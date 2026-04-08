@@ -60,7 +60,14 @@ ${MODERN_PRINCIPLES}
     }
   ],
   "patterns": [
-    { "name": "格局名", "type": "high-energy 或 stable", "effect": "效果", "tip": "如何運用" }
+    {
+      "name": "格局名",
+      "type": "high-energy 或 stable",
+      "emoji": "對應emoji",
+      "oneLiner": "一句大白話比喻（如：適合單打獨鬥的技術行動派）",
+      "trait": "這個格局讓你有什麼特質（1-2句，聊天口吻）",
+      "strategy": "最佳生存策略（2句話，具體到行動：該做什麼、不該做什麼）"
+    }
   ],
   "lifeTopics": {
     "career": {

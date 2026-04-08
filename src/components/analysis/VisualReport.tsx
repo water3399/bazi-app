@@ -150,20 +150,57 @@ export default function VisualReport({ data }: { data: AnalysisResult }) {
       {/* Patterns */}
       {data.patterns?.length > 0 && (
         <div className="bg-amber-950/40 border border-amber-800/20 rounded-2xl p-6">
-          <h3 className="text-amber-300 font-bold text-center mb-4">格局</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {data.patterns.map((p, i) => (
-              <div key={i} className={`rounded-xl p-4 border ${p.type === 'high-energy' ? 'bg-red-500/5 border-red-500/20' : 'bg-emerald-500/5 border-emerald-500/20'}`}>
-                <div className="flex items-center gap-2 mb-1">
-                  <span className={`text-sm font-bold ${p.type === 'high-energy' ? 'text-red-300' : 'text-emerald-300'}`}>{p.name}</span>
-                  <span className={`text-[9px] px-1.5 py-0.5 rounded border ${p.type === 'high-energy' ? 'text-red-400 border-red-500/30' : 'text-emerald-400 border-emerald-500/30'}`}>
-                    {p.type === 'high-energy' ? '高能量' : '穩定型'}
-                  </span>
+          <h3 className="text-amber-300 font-bold text-center mb-2">🎮 格局</h3>
+          <p className="text-[#8C7A62] text-xs text-center mb-5">格局就是你在人生遊戲裡的「天生職業屬性」和「最佳生存策略」</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {data.patterns.map((p, i) => {
+              const isHigh = p.type === 'high-energy';
+              return (
+                <div key={i} className={`rounded-xl p-5 border ${
+                  isHigh ? 'bg-[#D4856A]/5 border-[#D4856A]/25' : 'bg-[#5B9E7A]/5 border-[#5B9E7A]/25'
+                }`}>
+                  {/* Header */}
+                  <div className="flex items-center gap-2 mb-3">
+                    {p.emoji && <span className="text-xl">{p.emoji}</span>}
+                    <span className={`font-bold text-lg ${isHigh ? 'text-[#D4856A]' : 'text-[#5B9E7A]'}`}>{p.name}</span>
+                    <span className={`text-[9px] px-2 py-0.5 rounded-full border ${
+                      isHigh ? 'text-[#D4856A] border-[#D4856A]/30 bg-[#D4856A]/10' : 'text-[#5B9E7A] border-[#5B9E7A]/30 bg-[#5B9E7A]/10'
+                    }`}>
+                      {isHigh ? '高能量' : '穩定型'}
+                    </span>
+                  </div>
+
+                  {/* One-liner */}
+                  {p.oneLiner && (
+                    <p className="text-amber-200 text-sm font-medium mb-3">👉 {p.oneLiner}</p>
+                  )}
+
+                  {/* Trait */}
+                  {p.trait && (
+                    <div className="mb-3">
+                      <span className="text-[10px] text-[#8C7A62]">特質：</span>
+                      <p className="text-amber-200/70 text-xs leading-relaxed">{p.trait}</p>
+                    </div>
+                  )}
+
+                  {/* Strategy */}
+                  {p.strategy && (
+                    <div className="bg-amber-500/5 rounded-lg px-3 py-2 border border-amber-500/10">
+                      <span className="text-amber-400 text-[10px] font-bold">🎯 生存策略：</span>
+                      <p className="text-amber-200/70 text-xs mt-0.5 leading-relaxed">{p.strategy}</p>
+                    </div>
+                  )}
+
+                  {/* Fallback for old format */}
+                  {!p.oneLiner && p.effect && (
+                    <>
+                      <p className="text-amber-200/70 text-xs">{p.effect}</p>
+                      {p.tip && <p className="text-amber-400/50 text-[10px] mt-1">💡 {p.tip}</p>}
+                    </>
+                  )}
                 </div>
-                <p className="text-amber-200/70 text-xs">{p.effect}</p>
-                <p className="text-amber-400/50 text-[10px] mt-1">💡 {p.tip}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

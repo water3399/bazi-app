@@ -157,8 +157,12 @@ export interface AnalysisResult {
   patterns: Array<{
     name: string;
     type: string;
-    effect: string;
-    tip: string;
+    emoji?: string;
+    oneLiner?: string;
+    trait?: string;
+    strategy?: string;
+    effect?: string;
+    tip?: string;
   }>;
   lifeTopics?: Record<string, {
     score: number;
