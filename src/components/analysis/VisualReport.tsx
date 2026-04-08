@@ -135,6 +135,69 @@ export default function VisualReport({ data }: { data: AnalysisResult }) {
         </div>
       )}
 
+      {/* ===== Eight Life Topics ===== */}
+      {data.lifeTopics && Object.keys(data.lifeTopics).length > 0 && (
+        <div className="bg-amber-950/40 border border-amber-800/20 rounded-2xl p-6">
+          <h3 className="text-amber-300 font-bold text-center mb-5">🎯 八大人生主題</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {Object.entries(data.lifeTopics).map(([key, topic]) => {
+              const sc = topic.score;
+              const color = sc >= 80 ? '#5B9E7A' : sc >= 60 ? '#C9A84C' : sc >= 40 ? '#D4856A' : '#B85C5C';
+              const icons: Record<string, string> = {
+                career: '💼', love: '💕', marriage: '💍', wealth: '💰',
+                health: '🏥', children: '👶', social: '🤝', study: '📚',
+              };
+              const details = Object.entries(topic).filter(([k]) => !['score', 'title'].includes(k));
+              return (
+                <div key={key} className="bg-[#2A2018] rounded-xl p-4 border border-amber-800/10">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg">{icons[key] || '📋'}</span>
+                      <span className="text-amber-300 font-bold text-sm">{topic.title}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-16 h-2 bg-amber-900/30 rounded-full overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: `${sc}%`, background: color }} />
+                      </div>
+                      <span className="text-sm font-bold" style={{ color }}>{sc}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    {details.map(([k, v]) => (
+                      <p key={k} className="text-amber-200/60 text-xs">
+                        {typeof v === 'string' ? v : Array.isArray(v) ? (v as string[]).join('、') : ''}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ===== Branch Relations (刑沖合害) ===== */}
+      {data.branchRelations && (
+        <div className="bg-amber-950/40 border border-amber-800/20 rounded-2xl p-6">
+          <h3 className="text-amber-300 font-bold text-center mb-3">⚡ 刑沖合害</h3>
+          <p className="text-amber-200/70 text-sm text-center mb-2">{data.branchRelations.summary}</p>
+          <p className="text-amber-400/50 text-xs text-center">💡 {data.branchRelations.impact}</p>
+        </div>
+      )}
+
+      {/* ===== Shen Sha (神煞) ===== */}
+      {data.shenSha && data.shenSha.highlights?.length > 0 && (
+        <div className="bg-amber-950/40 border border-amber-800/20 rounded-2xl p-6">
+          <h3 className="text-amber-300 font-bold text-center mb-3">🌟 神煞系統</h3>
+          <div className="flex flex-wrap justify-center gap-2 mb-3">
+            {data.shenSha.highlights.map((h, i) => (
+              <span key={i} className="px-3 py-1.5 rounded-lg bg-[#2A2018] border border-amber-800/20 text-amber-200 text-xs">{h}</span>
+            ))}
+          </div>
+          <p className="text-amber-400/50 text-xs text-center">{data.shenSha.summary}</p>
+        </div>
+      )}
+
       {/* Current Fortune */}
       {data.currentFortune && (
         <div className="bg-gradient-to-br from-amber-900/20 to-amber-950/40 border border-amber-600/30 rounded-2xl p-6">

@@ -55,6 +55,68 @@ ${MODERN_PRINCIPLES}
   "patterns": [
     { "name": "格局名", "type": "high-energy 或 stable", "effect": "效果", "tip": "如何運用" }
   ],
+  "lifeTopics": {
+    "career": {
+      "score": 78, "title": "事業發展",
+      "suitable": ["適合方向1", "適合方向2"],
+      "style": "工作風格描述（1句話）",
+      "peak": "事業高峰期預測",
+      "advice": "一句話建議"
+    },
+    "love": {
+      "score": 75, "title": "戀愛感情",
+      "type": "感情模式描述（1句話）",
+      "idealPartner": "理想對象類型",
+      "timing": "感情運旺的時期",
+      "advice": "一句話建議"
+    },
+    "marriage": {
+      "score": 70, "title": "婚姻關係",
+      "quality": "婚姻品質預測（1句話）",
+      "spouseType": "配偶特質",
+      "challenge": "需要注意的課題",
+      "advice": "一句話建議"
+    },
+    "wealth": {
+      "score": 72, "title": "財富運勢",
+      "type": "正財型/偏財型/技術致富/投資型",
+      "peak": "財運高峰期",
+      "risk": "需注意的財務風險",
+      "advice": "一句話建議"
+    },
+    "health": {
+      "score": 68, "title": "健康體質",
+      "constitution": "體質特點",
+      "weakPoints": "需注意的部位",
+      "advice": "養生建議"
+    },
+    "children": {
+      "score": 75, "title": "子女緣分",
+      "relation": "與子女的關係模式",
+      "timing": "適合的時機",
+      "advice": "一句話建議"
+    },
+    "social": {
+      "score": 80, "title": "人際社交",
+      "style": "社交風格",
+      "noble": "貴人方向（來自什麼類型的人）",
+      "advice": "一句話建議"
+    },
+    "study": {
+      "score": 76, "title": "學業考試",
+      "ability": "學習特點",
+      "bestFields": "擅長的學科方向",
+      "advice": "一句話建議"
+    }
+  },
+  "branchRelations": {
+    "summary": "刑沖合害的綜合解讀（2句話）",
+    "impact": "對人生的主要影響"
+  },
+  "shenSha": {
+    "highlights": ["最重要的3-5個神煞及其現代含義"],
+    "summary": "神煞系統的綜合解讀（1句話）"
+  },
   "currentFortune": {
     "daYun": "大運干支",
     "liuNian": "流年干支",
@@ -73,8 +135,10 @@ ${MODERN_PRINCIPLES}
 
 評分 85-100=天生優勢 70-84=條件不錯 55-69=普通 40-54=有挑戰 25-39=需額外努力
 十神 tenGodsHighlights 列出命盤中最重要的 3-5 個十神。
-patterns 列出成立的格局（正官格、食神格、傷官配印等）。
-所有欄位精簡，insight/meaning 最多 2-3 句。`;
+patterns 列出成立的格局。
+lifeTopics 八大人生主題必須每個都填。
+branchRelations 和 shenSha 根據命盤資料中的刑沖合害和神煞來分析。
+所有欄位精簡，每個最多 2-3 句。`;
 
 export const CHAT_SYSTEM_PROMPT = `你是「命理大師」，結合古典八字與現代視角的命理顧問。
 

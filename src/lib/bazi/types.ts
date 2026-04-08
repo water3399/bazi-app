@@ -156,6 +156,19 @@ export interface AnalysisResult {
     effect: string;
     tip: string;
   }>;
+  lifeTopics?: Record<string, {
+    score: number;
+    title: string;
+    [key: string]: unknown;
+  }>;
+  branchRelations?: {
+    summary: string;
+    impact: string;
+  };
+  shenSha?: {
+    highlights: string[];
+    summary: string;
+  };
   currentFortune: {
     daYun: string;
     liuNian: string;

@@ -4,6 +4,7 @@ import { useReducer, useCallback } from 'react';
 import { useLang } from '@/lib/langContext';
 import type { AnalysisState, AnalysisAction, BirthData } from '@/lib/bazi/types';
 import { generateChart, formatChartText } from '@/lib/bazi/engine';
+import { analyzeBranchRelations, extractShenSha, formatRelationsContext } from '@/lib/bazi/relations';
 import { saveReport } from '@/lib/reportStore';
 import StepIndicator from '@/components/analysis/StepIndicator';
 import BirthForm from '@/components/analysis/BirthForm';
@@ -56,7 +57,10 @@ export default function AnalysisPage() {
     dispatch({ type: 'ANALYZE_START' });
     try {
       const chart = state.chartData;
-      const context = formatChartText(chart);
+      const relations = analyzeBranchRelations(chart);
+      const shenSha = extractShenSha(state.birthData);
+      const relationsCtx = formatRelationsContext(relations, shenSha);
+      const context = formatChartText(chart) + '\n\n' + relationsCtx;
 
       // Extract data for server-side knowledge lookup
       const shiShenList = [
