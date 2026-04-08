@@ -3,7 +3,19 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: '命理八字 — AI 四柱八字命理分析',
-  description: '結合 lunar-typescript 精準排盤與 AI 深度解讀，融合穷通宝典、滴天髓等九本古典，提供現代化八字命理分析。',
+  description: '結合精準排盤引擎與 AI 深度解讀，融合穷通宝典、滴天髓、三命通会等九本古典，以現代視角提供四柱八字命理分析、流年逐月預測、互動問答。',
+  openGraph: {
+    title: '命理八字 — AI 四柱八字命理分析系統',
+    description: '精準排盤 + 九本古典知識庫 + AI 現代解讀 + 逐月流年 + 互動問答',
+    siteName: '命理八字',
+    locale: 'zh_TW',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '命理八字 — AI 四柱八字命理分析系統',
+    description: '精準排盤 + 九本古典知識庫 + AI 現代解讀',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
