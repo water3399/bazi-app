@@ -71,7 +71,7 @@ export default function FortunePage() {
         {/* Year selector: birth year to current+5 */}
         {(() => {
           const birthYear = report.birthData.year;
-          const endYear = currentYear + 5;
+          const endYear = currentYear;
           const allYears = Array.from({ length: endYear - birthYear + 1 }, (_, i) => birthYear + i);
           const decades: number[] = [];
           for (let d = Math.floor(birthYear / 10) * 10; d <= endYear; d += 10) decades.push(d);
