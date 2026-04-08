@@ -39,28 +39,53 @@ export async function POST(request: NextRequest) {
     const rawContent = await callMiniMax({
       model: 'MiniMax-M2.7',
       temperature: 0.3,
-      max_tokens: 6000,
+      max_tokens: 12000,
       messages: [
         { role: 'system', content: ANALYSIS_SYSTEM_PROMPT },
-        { role: 'user', content: `根據以下八字命盤資料，輸出 JSON 格式分析（只輸出 JSON）：\n\n${fullContext}` },
+        { role: 'user', content: `根據以下八字命盤資料，輸出完整的 JSON 格式分析。注意：JSON 必須完整、合法，所有字串值中的雙引號用 \\" 轉義。只輸出 JSON，不要其他文字。\n\n${fullContext}` },
       ],
     });
 
     const cleaned = rawContent.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
+    console.log('[Analyze] Response length:', cleaned.length);
+
     let analysis;
-    try {
-      analysis = JSON.parse(cleaned);
-    } catch {
-      const m = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/);
-      if (m) { analysis = JSON.parse(m[1].trim()); }
-      else {
-        const s = cleaned.indexOf('{'), e = cleaned.lastIndexOf('}');
-        if (s >= 0 && e > s) analysis = JSON.parse(cleaned.substring(s, e + 1));
-        else throw new Error('無法解析 AI 回應');
+    // Try multiple parsing strategies
+    const jsonCandidates = [
+      cleaned,
+      // Extract from code block
+      cleaned.match(/```(?:json)?\s*([\s\S]*?)```/)?.[1]?.trim(),
+      // Extract first { to last }
+      (() => { const s = cleaned.indexOf('{'), e = cleaned.lastIndexOf('}'); return s >= 0 && e > s ? cleaned.substring(s, e + 1) : null; })(),
+    ].filter(Boolean);
+
+    for (const candidate of jsonCandidates) {
+      if (!candidate) continue;
+      try {
+        analysis = JSON.parse(candidate);
+        break;
+      } catch {
+        // Try fixing common JSON issues
+        try {
+          const fixed = candidate
+            .replace(/,\s*}/g, '}')       // trailing comma before }
+            .replace(/,\s*]/g, ']')       // trailing comma before ]
+            .replace(/[\r\n]+/g, ' ')     // newlines in strings
+            .replace(/"\s+"/g, '","');     // missing comma between strings
+          analysis = JSON.parse(fixed);
+          break;
+        } catch {
+          continue;
+        }
       }
     }
 
-    if (!analysis?.profile) throw new Error('AI 回應格式異常，請重新分析');
+    if (!analysis) {
+      console.error('[Analyze] All parse attempts failed. First 500 chars:', cleaned.substring(0, 500));
+      throw new Error('AI 回應的 JSON 格式有誤，請重新分析');
+    }
+
+    if (!analysis.profile) throw new Error('AI 回應缺少關鍵欄位，請重新分析');
     return NextResponse.json({ analysis });
   } catch (error) {
     console.error('Analysis error:', error);
