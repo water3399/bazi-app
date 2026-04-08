@@ -19,10 +19,10 @@ export default function DaYunChart({ chartData }: { chartData: ChartData }) {
   });
 
   return (
-    <div className="bg-[#F5F0E8] rounded-2xl p-6 border border-[#E0D5C0]">
+    <div className="bg-[#1E1810] rounded-2xl p-6 border border-[#3D3020]">
       <div className="flex items-center gap-3 mb-8">
-        <span className="text-[#6B5B3E] font-bold text-xl">📊 大運</span>
-        <span className="text-[#B8A48C] text-sm">十年一運</span>
+        <span className="text-[#C9A84C] font-bold text-xl">📊 大運</span>
+        <span className="text-[#6B5B3E] text-sm">十年一運</span>
       </div>
 
       {/* Horizontally scrollable */}
@@ -43,7 +43,7 @@ export default function DaYunChart({ chartData }: { chartData: ChartData }) {
                 </div>
 
                 {/* Score */}
-                <span className={`text-lg font-bold ${isCurrent ? 'text-[#C9A84C]' : 'text-[#A69070]'}`}>
+                <span className={`text-lg font-bold ${isCurrent ? 'text-[#C9A84C]' : 'text-[#8C7A62]'}`}>
                   {score}
                 </span>
 
@@ -52,17 +52,17 @@ export default function DaYunChart({ chartData }: { chartData: ChartData }) {
                   className={`w-full rounded-2xl transition-all duration-700 ${
                     isCurrent
                       ? 'bg-gradient-to-t from-[#D4A843] to-[#E8C870] shadow-lg shadow-[#D4A843]/30 ring-2 ring-[#C9A84C]/40'
-                      : 'bg-gradient-to-t from-[#E0D5C0] to-[#EDE5D5]'
+                      : 'bg-gradient-to-t from-[#3D3020] to-[#4A3C28]'
                   }`}
                   style={{ height: barHeight }}
                 />
 
                 {/* Label */}
                 <div className={`text-center ${isCurrent ? 'font-bold' : ''}`}>
-                  <div className={`text-xs ${isCurrent ? 'text-[#6B5B3E]' : 'text-[#A69070]'}`}>
+                  <div className={`text-xs ${isCurrent ? 'text-[#C9A84C]' : 'text-[#8C7A62]'}`}>
                     {dy.startAge}-{dy.endAge}歲
                   </div>
-                  <div className={`text-sm ${isCurrent ? 'text-[#6B5B3E] font-bold' : 'text-[#8C7A62]'}`}>
+                  <div className={`text-sm ${isCurrent ? 'text-[#C9A84C] font-bold' : 'text-[#8C7A62]'}`}>
                     {dy.ganZhi}
                   </div>
                   {isCurrent && (

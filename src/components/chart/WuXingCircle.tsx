@@ -69,10 +69,10 @@ export default function WuXingCircle({ chartData }: { chartData: ChartData }) {
   const relations = WUXING_RELATION[dayEl] || {};
 
   return (
-    <div className="bg-[#F5F0E8] rounded-2xl p-6 border border-[#E0D5C0]">
+    <div className="bg-[#1E1810] rounded-2xl p-6 border border-[#3D3020]">
       <div className="flex items-center gap-3 mb-6">
-        <span className="text-[#6B5B3E] font-bold text-lg">【{strength}】</span>
-        <span className="text-[#A69070] text-xs">日主：{chartData.dayMaster}（{dayEl}）</span>
+        <span className="text-[#C9A84C] font-bold text-lg">【{strength}】</span>
+        <span className="text-[#8C7A62] text-xs">日主：{chartData.dayMaster}（{dayEl}）</span>
       </div>
 
       {/* Circle */}
@@ -129,7 +129,7 @@ export default function WuXingCircle({ chartData }: { chartData: ChartData }) {
       <div className="text-center mb-5">
         <div className="inline-flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-[#C9A84C]" />
-          <span className="text-[#6B5B3E] font-bold text-lg">【喜用 {xiYong.join('、')}】</span>
+          <span className="text-[#C9A84C] font-bold text-lg">【喜用 {xiYong.join('、')}】</span>
           <span className="w-2 h-2 rounded-full bg-[#C9A84C]" />
         </div>
       </div>
@@ -145,14 +145,14 @@ export default function WuXingCircle({ chartData }: { chartData: ChartData }) {
         <div className="text-center">
           <div className="text-[#8C7A62] text-xs mb-2">🧭 幸運方位</div>
           <div className="flex justify-center gap-2">
-            {xiYong.map((wx, i) => <span key={i} className="px-2 py-1 rounded-lg bg-[#F5F0E8] border border-[#D4C5A8] text-[#6B5B3E] text-xs font-bold">{LUCKY_DIRS[wx]?.replace('🧭 ','')}</span>)}
+            {xiYong.map((wx, i) => <span key={i} className="px-2 py-1 rounded-lg bg-[#1E1810] border border-[#D4C5A8] text-[#C9A84C] text-xs font-bold">{LUCKY_DIRS[wx]?.replace('🧭 ','')}</span>)}
           </div>
         </div>
         <div className="text-center">
           <div className="text-[#8C7A62] text-xs mb-2">🔢 幸運數字</div>
           <div className="flex justify-center gap-2">
             {xiYong.flatMap(wx => LUCKY_NUMS[wx] || []).slice(0, 2).map((n, i) => (
-              <span key={i} className="w-9 h-9 rounded-full bg-[#F5F0E8] border border-[#D4C5A8] text-[#6B5B3E] text-sm font-bold flex items-center justify-center">{n}</span>
+              <span key={i} className="w-9 h-9 rounded-full bg-[#1E1810] border border-[#D4C5A8] text-[#C9A84C] text-sm font-bold flex items-center justify-center">{n}</span>
             ))}
           </div>
         </div>
