@@ -5,18 +5,18 @@ import type { ChartData } from '@/lib/bazi/types';
 
 const SHISHEN_STYLES: Record<string, { color: string; emoji: string }> = {
   '比肩': { color: '#7A8490', emoji: '🛡️' },
-  '劫财': { color: '#C9A84C', emoji: '⚡' },
+  '劫財': { color: '#C9A84C', emoji: '⚡' },
   '食神': { color: '#8B7EC8', emoji: '🎨' },
-  '伤官': { color: '#6B8DB5', emoji: '💡' },
-  '正财': { color: '#5B9E7A', emoji: '🌿' },
-  '偏财': { color: '#6BC4A0', emoji: '🍀' },
+  '傷官': { color: '#6B8DB5', emoji: '💡' },
+  '正財': { color: '#5B9E7A', emoji: '🌿' },
+  '偏財': { color: '#6BC4A0', emoji: '🍀' },
   '正官': { color: '#C47A7A', emoji: '👔' },
-  '七杀': { color: '#B85C5C', emoji: '⚔️' },
+  '七殺': { color: '#B85C5C', emoji: '⚔️' },
   '正印': { color: '#A07850', emoji: '📚' },
   '偏印': { color: '#7A7A7A', emoji: '🔮' },
 };
 
-const SHISHEN_LIST = ['比肩', '劫财', '食神', '伤官', '正财', '偏财', '正官', '七杀', '正印', '偏印'];
+const SHISHEN_LIST = ['比肩', '劫財', '食神', '傷官', '正財', '偏財', '正官', '七殺', '正印', '偏印'];
 
 function calcShiShenDist(chart: ChartData): Record<string, number> {
   const dist: Record<string, number> = {};

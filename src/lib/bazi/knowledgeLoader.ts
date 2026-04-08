@@ -21,7 +21,7 @@ function loadFile(filename: string): string {
 }
 
 // ============================================================
-// 1. 子平真诠 — 格局理論精髓
+// 1. 子平真詮 — 格局理論精髓
 // ============================================================
 function extractZiPingSection(topic: string): string {
   const data = loadFile('zipingzhenquan.md');
@@ -38,7 +38,7 @@ function extractZiPingSection(topic: string): string {
 }
 
 // ============================================================
-// 2. 三命通会 — 最全面的八字百科
+// 2. 三命通會 — 最全面的八字百科
 // ============================================================
 function extractSanMingSection(keyword: string): string {
   const data = loadFile('sanming-tonghui.txt');
@@ -60,7 +60,7 @@ function extractSanMingSection(keyword: string): string {
 }
 
 // ============================================================
-// 3. 渊海子平 — 十神基礎
+// 3. 淵海子平 — 十神基礎
 // ============================================================
 function extractYuanHaiSection(dayGan: string): string {
   const data = loadFile('yuanhai-ziping.txt');
@@ -115,7 +115,7 @@ function extractGeJuSection(shiShenList: string[]): string {
 }
 
 // ============================================================
-// 5. 子平真诠评注 — 徐樂吾註解
+// 5. 子平真詮评注 — 徐樂吾註解
 // ============================================================
 function extractPingZhuSection(topic: string): string {
   const data = loadFile('zipingzhenquan-pingzhu.md');
@@ -149,17 +149,17 @@ export function buildBaziKnowledge(
 ): string {
   const sections: string[] = [];
 
-  // 1. 渊海子平 — 日主基礎
+  // 1. 淵海子平 — 日主基礎
   const yuanHai = extractYuanHaiSection(dayGan);
   if (yuanHai) {
-    sections.push('===== 渊海子平·日主論 =====');
+    sections.push('===== 淵海子平·日主論 =====');
     sections.push(yuanHai);
   }
 
-  // 2. 子平真诠 — 用神和格局
+  // 2. 子平真詮 — 用神和格局
   const uniqueShiShen = Array.from(new Set(shiShenList.filter(s => s && s !== '日主')));
   if (uniqueShiShen.length > 0) {
-    sections.push('\n===== 子平真诠·十神論 =====');
+    sections.push('\n===== 子平真詮·十神論 =====');
     // 找用神相關章節
     const yongShen = extractZiPingSection('用神');
     if (yongShen) sections.push(yongShen.substring(0, 1500));
@@ -171,29 +171,29 @@ export function buildBaziKnowledge(
     }
   }
 
-  // 3. 子平真诠评注 — 補充解讀
+  // 3. 子平真詮评注 — 補充解讀
   if (uniqueShiShen.length > 0) {
     const pingzhu = extractPingZhuSection(uniqueShiShen[0]);
     if (pingzhu) {
-      sections.push('\n===== 子平真诠评注·補充 =====');
+      sections.push('\n===== 子平真詮评注·補充 =====');
       sections.push(pingzhu);
     }
   }
 
-  // 4. 三命通会 — 日柱斷語
+  // 4. 三命通會 — 日柱斷語
   for (const gz of ganZhiList) {
     const sanMing = extractSanMingSection(gz);
     if (sanMing) {
-      sections.push(`\n===== 三命通会·${gz} =====`);
+      sections.push(`\n===== 三命通會·${gz} =====`);
       sections.push(sanMing.substring(0, 1500));
       break; // 只取日柱的
     }
   }
 
-  // 5. 三命通会 — 日主五行論
+  // 5. 三命通會 — 日主五行論
   const wuXingSanMing = extractSanMingSection(`论${dayGan}`);
   if (wuXingSanMing) {
-    sections.push('\n===== 三命通会·日主論 =====');
+    sections.push('\n===== 三命通會·日主論 =====');
     sections.push(wuXingSanMing.substring(0, 1500));
   }
 

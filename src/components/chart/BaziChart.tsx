@@ -17,12 +17,12 @@ const WUXING_COLORS: Record<string, string> = {
 
 const SHISHEN_COLORS: Record<string, string> = {
   '比肩': 'bg-slate-500/20 text-slate-300 border-slate-500/30',
-  '劫财': 'bg-slate-500/20 text-slate-300 border-slate-500/30',
+  '劫財': 'bg-slate-500/20 text-slate-300 border-slate-500/30',
   '食神': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-  '伤官': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
-  '偏财': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-  '正财': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-  '七杀': 'bg-red-500/20 text-red-300 border-red-500/30',
+  '傷官': 'bg-orange-500/20 text-orange-300 border-orange-500/30',
+  '偏財': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+  '正財': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+  '七殺': 'bg-red-500/20 text-red-300 border-red-500/30',
   '正官': 'bg-purple-500/20 text-purple-300 border-purple-500/30',
   '偏印': 'bg-sky-500/20 text-sky-300 border-sky-500/30',
   '正印': 'bg-sky-500/20 text-sky-300 border-sky-500/30',

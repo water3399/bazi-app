@@ -8,7 +8,7 @@ interface AnalysisLoadingProps {
 
 const CHART_STAGES = [
   { text: '☰ 載入四柱命盤資料...', duration: 3000 },
-  { text: '📚 查閱穷通宝典、三命通会...', duration: 5000 },
+  { text: '📚 查閱窮通寶典、三命通會...', duration: 5000 },
   { text: '🔍 分析日主旺衰與十神...', duration: 8000 },
   { text: '⚖️ 判定格局與用神...', duration: 10000 },
   { text: '🌿 解讀五行生剋互動...', duration: 15000 },

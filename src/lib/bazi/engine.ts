@@ -1,5 +1,6 @@
 import { Solar } from 'lunar-typescript';
 import type { BirthData, ChartData, Pillar, DaYunPeriod, LiuNianData, LiuYueData, WuXingCount } from './types';
+import { toTraditional } from './traditionalChinese';
 
 // 天干對應五行
 const GAN_WUXING: Record<string, keyof WuXingCount> = {
@@ -52,13 +53,14 @@ function extractPillar(bazi: any, pillarName: 'Year' | 'Month' | 'Day' | 'Time')
     pillarName === 'Month' ? bazi.getMonth() :
     pillarName === 'Day' ? bazi.getDay() : bazi.getTime();
   const naYin = bazi[`get${pillarName}NaYin`]();
-  const shiShenGan = pillarName === 'Day' ? '日主' : bazi[`get${pillarName}ShiShenGan`]();
-  const shiShenZhi = bazi[`get${pillarName}ShiShenZhi`]() || [];
+  const shiShenGan = pillarName === 'Day' ? '日主' : toTraditional(bazi[`get${pillarName}ShiShenGan`]());
+  const rawShiShenZhi = bazi[`get${pillarName}ShiShenZhi`]() || [];
+  const shiShenZhi = rawShiShenZhi.map((s: string) => toTraditional(s));
   const hideGan = bazi[`get${pillarName}HideGan`]() || [];
-  const diShi = bazi[`get${pillarName}DiShi`]();
+  const diShi = toTraditional(bazi[`get${pillarName}DiShi`]());
   const xunKong = bazi[`get${pillarName}XunKong`]();
 
-  return { gan, zhi, ganZhi, naYin, shiShenGan, shiShenZhi, hideGan, diShi, xunKong };
+  return { gan, zhi, ganZhi, naYin: toTraditional(naYin), shiShenGan, shiShenZhi, hideGan, diShi, xunKong };
 }
 
 export function generateChart(birthData: BirthData): ChartData {
@@ -139,8 +141,8 @@ export function generateChart(birthData: BirthData): ChartData {
     lunarYear: lunar.getYearInChinese(),
     lunarMonth: lunar.getMonthInChinese(),
     lunarDay: lunar.getDayInChinese(),
-    shengXiao: lunar.getYearShengXiao(),
-    xingZuo: solar.getXingZuo(),
+    shengXiao: toTraditional(lunar.getYearShengXiao()),
+    xingZuo: toTraditional(solar.getXingZuo()),
     yearPillar,
     monthPillar,
     dayPillar,

@@ -21,10 +21,10 @@ function ScoreBar({ score, label, brief }: { score: number; label: string; brief
 }
 
 const SHISHEN_BG: Record<string, string> = {
-  '比肩': 'border-slate-500/30 bg-slate-500/5', '劫财': 'border-slate-500/30 bg-slate-500/5',
-  '食神': 'border-orange-500/30 bg-orange-500/5', '伤官': 'border-orange-500/30 bg-orange-500/5',
-  '偏财': 'border-emerald-500/30 bg-emerald-500/5', '正财': 'border-emerald-500/30 bg-emerald-500/5',
-  '七杀': 'border-red-500/30 bg-red-500/5', '正官': 'border-purple-500/30 bg-purple-500/5',
+  '比肩': 'border-slate-500/30 bg-slate-500/5', '劫財': 'border-slate-500/30 bg-slate-500/5',
+  '食神': 'border-orange-500/30 bg-orange-500/5', '傷官': 'border-orange-500/30 bg-orange-500/5',
+  '偏財': 'border-emerald-500/30 bg-emerald-500/5', '正財': 'border-emerald-500/30 bg-emerald-500/5',
+  '七殺': 'border-red-500/30 bg-red-500/5', '正官': 'border-purple-500/30 bg-purple-500/5',
   '偏印': 'border-sky-500/30 bg-sky-500/5', '正印': 'border-sky-500/30 bg-sky-500/5',
   '日主': 'border-amber-500/30 bg-amber-500/5',
 };

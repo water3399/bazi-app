@@ -4,7 +4,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: '命理八字 — AI 四柱八字命理分析',
-  description: '結合精準排盤引擎與 AI 深度解讀，融合穷通宝典、滴天髓、三命通会等九本古典，以現代視角提供四柱八字命理分析、流年逐月預測、互動問答。',
+  description: '結合精準排盤引擎與 AI 深度解讀，融合窮通寶典、滴天髓、三命通會等九本古典，以現代視角提供四柱八字命理分析、流年逐月預測、互動問答。',
   openGraph: {
     title: '命理八字 — AI 四柱八字命理分析系統',
     description: '精準排盤 + 九本古典知識庫 + AI 現代解讀 + 逐月流年 + 互動問答',
