@@ -1,100 +1,40 @@
-import Image from "next/image";
+import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-20">
+        <div className="text-center max-w-2xl">
+          <div className="text-5xl mb-4 opacity-50">☰</div>
+          <h1 className="text-4xl md:text-5xl font-bold text-amber-400 mb-4" style={{ fontFamily: "'Noto Serif TC', serif" }}>
+            命理八字
+          </h1>
+          <p className="text-amber-300/80 text-lg mb-2">AI 四柱八字命理分析系統</p>
+          <p className="text-amber-500/60 text-sm mb-10 max-w-md mx-auto">
+            結合 lunar-typescript 精準排盤、穷通宝典等九本古典知識庫與 AI 深度解讀，以現代視角為你揭示命格密碼
+          </p>
+          <Link href="/analysis"
+            className="inline-block px-10 py-4 rounded-xl bg-gradient-to-r from-amber-600/80 to-yellow-600/80 text-white font-bold text-lg hover:from-amber-500/80 hover:to-yellow-500/80 transition-all shadow-xl shadow-amber-900/30">
+            ☰ 開始排盤分析
+          </Link>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20 max-w-3xl w-full">
+          {[
+            { icon: '🔮', title: '精準排盤', desc: 'lunar-typescript 引擎：四柱、十神、藏干、大運流年流月、十二長生、納音、神煞，一步到位' },
+            { icon: '📚', title: '九本古典', desc: '融合穷通宝典、滴天髓、三命通会、渊海子平、子平真诠、千里命稿、神峰通考等經典' },
+            { icon: '🤖', title: 'AI 現代解讀', desc: '視覺化報告 + 五維命格指數 + 逐月流年 + 互動問答，用 2026 年的框架解讀古典智慧' },
+          ].map((f, i) => (
+            <div key={i} className="bg-amber-950/30 border border-amber-800/20 rounded-xl p-6 text-center hover:border-amber-700/30 transition-all">
+              <div className="text-3xl mb-3">{f.icon}</div>
+              <h3 className="text-amber-300 font-bold mb-2">{f.title}</h3>
+              <p className="text-amber-500/60 text-sm">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <footer className="border-t border-amber-800/20 py-6 text-center">
+        <p className="text-amber-700/50 text-xs">命理八字 — 排盤引擎 lunar-typescript | AI 解讀 | 知識庫：穷通宝典 · 滴天髓 · 三命通会</p>
       </footer>
     </div>
   );
