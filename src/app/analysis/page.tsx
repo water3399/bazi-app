@@ -50,11 +50,42 @@ export default function AnalysisPage() {
     if (!state.chartData) return;
     dispatch({ type: 'ANALYZE_START' });
     try {
-      const context = formatChartText(state.chartData);
+      const chart = state.chartData;
+      const context = formatChartText(chart);
+
+      // Extract data for server-side knowledge lookup
+      const shiShenList = [
+        chart.yearPillar.shiShenGan,
+        chart.monthPillar.shiShenGan,
+        chart.hourPillar.shiShenGan,
+        ...chart.yearPillar.shiShenZhi,
+        ...chart.monthPillar.shiShenZhi,
+        ...chart.dayPillar.shiShenZhi,
+        ...chart.hourPillar.shiShenZhi,
+      ].filter(Boolean);
+
+      const ganZhiList = [
+        chart.yearPillar.ganZhi,
+        chart.monthPillar.ganZhi,
+        chart.dayPillar.ganZhi,
+        chart.hourPillar.ganZhi,
+      ];
+
+      // Find dominant element
+      const wx = chart.wuXing;
+      const maxEl = Object.entries(wx).sort(([,a], [,b]) => b - a)[0]?.[0] || '';
+      const elMap: Record<string, string> = { wood: '木', fire: '火', earth: '土', metal: '金', water: '水' };
+
       const res = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ context }),
+        body: JSON.stringify({
+          context,
+          dayGan: chart.dayMaster,
+          shiShenList,
+          ganZhiList,
+          wuXingDominant: elMap[maxEl] || '',
+        }),
       });
       if (!res.ok) { const d = await res.json(); throw new Error(d.error || '分析失敗'); }
       const data = await res.json();
