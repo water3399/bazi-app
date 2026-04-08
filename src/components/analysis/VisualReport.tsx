@@ -279,15 +279,50 @@ export default function VisualReport({ data }: { data: AnalysisResult }) {
       )}
 
       {/* ===== Shen Sha (神煞) ===== */}
-      {data.shenSha && data.shenSha.highlights?.length > 0 && (
+      {data.shenSha && (data.shenSha.items?.length || data.shenSha.highlights?.length) && (
         <div className="bg-amber-950/40 border border-amber-800/20 rounded-2xl p-6">
-          <h3 className="text-amber-300 font-bold text-center mb-3">🌟 神煞系統</h3>
-          <div className="flex flex-wrap justify-center gap-2 mb-3">
-            {data.shenSha.highlights.map((h, i) => (
-              <span key={i} className="px-3 py-1.5 rounded-lg bg-[#2A2018] border border-amber-800/20 text-amber-200 text-xs">{h}</span>
-            ))}
-          </div>
-          <p className="text-amber-400/50 text-xs text-center">{data.shenSha.summary}</p>
+          <h3 className="text-amber-300 font-bold text-center mb-2">🌟 神煞系統</h3>
+          <p className="text-[#8C7A62] text-xs text-center mb-5">神煞就像手遊裡角色自帶的「隱藏天賦」或「附加 Buff」</p>
+
+          {/* New format: detailed items */}
+          {data.shenSha.items && data.shenSha.items.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              {data.shenSha.items.map((item, i) => {
+                const isGood = item.type === '吉神';
+                return (
+                  <div key={i} className={`rounded-xl p-4 border ${
+                    isGood ? 'bg-[#5B9E7A]/5 border-[#5B9E7A]/20' : 'bg-[#D4856A]/5 border-[#D4856A]/20'
+                  }`}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xl">{item.emoji}</span>
+                      <span className={`font-bold text-base ${isGood ? 'text-[#5B9E7A]' : 'text-[#D4856A]'}`}>{item.name}</span>
+                      <span className={`text-[9px] px-1.5 py-0.5 rounded-full border ${
+                        isGood ? 'text-[#5B9E7A] border-[#5B9E7A]/30' : 'text-[#D4856A] border-[#D4856A]/30'
+                      }`}>{item.type}</span>
+                    </div>
+                    <p className="text-amber-200 text-sm font-medium mb-1">👉 {item.oneLiner}</p>
+                    <p className="text-amber-200/60 text-xs leading-relaxed">{item.meaning}</p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Fallback: old highlight format */}
+          {!data.shenSha.items?.length && data.shenSha.highlights && (
+            <div className="flex flex-wrap justify-center gap-2 mb-3">
+              {data.shenSha.highlights.map((h, i) => (
+                <span key={i} className="px-3 py-1.5 rounded-lg bg-[#2A2018] border border-amber-800/20 text-amber-200 text-xs">{h}</span>
+              ))}
+            </div>
+          )}
+
+          {/* Summary */}
+          {data.shenSha.summary && (
+            <div className="bg-amber-500/5 rounded-lg px-4 py-3 border border-amber-500/10 text-center">
+              <p className="text-amber-300 text-sm">{data.shenSha.summary}</p>
+            </div>
+          )}
         </div>
       )}
 

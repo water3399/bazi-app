@@ -134,8 +134,16 @@ ${MODERN_PRINCIPLES}
     }
   ],
   "shenSha": {
-    "highlights": ["最重要的3-5個神煞及其現代含義"],
-    "summary": "神煞系統的綜合解讀（1句話）"
+    "items": [
+      {
+        "name": "神煞名",
+        "emoji": "對應emoji",
+        "type": "吉神/注意",
+        "oneLiner": "一句大白話翻譯（如：自帶發電機的桃花星）",
+        "meaning": "具體在生活中代表什麼（1-2句，聊天口吻，舉例說明）"
+      }
+    ],
+    "summary": "整體總結：好牌多還是壞牌多，一句話概括生存之道"
   },
   "currentFortune": {
     "daYun": "大運干支",

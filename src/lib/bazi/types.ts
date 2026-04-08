@@ -178,7 +178,14 @@ export interface AnalysisResult {
     advice: string;
   }>;
   shenSha?: {
-    highlights: string[];
+    items?: Array<{
+      name: string;
+      emoji: string;
+      type: string;
+      oneLiner: string;
+      meaning: string;
+    }>;
+    highlights?: string[]; // backward compat
     summary: string;
   };
   currentFortune: {
