@@ -170,10 +170,20 @@ export default function SynastryPage() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 mt-3">
-                    <select value={`${m.birthData.hour}:${m.birthData.minute}`}
-                      onChange={e => { const [h,mi] = e.target.value.split(':').map(Number); updateBirth(idx, { hour: h, minute: mi }); }}
+                    <select
+                      defaultValue={6}
+                      onChange={e => {
+                        const scIdx = Number(e.target.value);
+                        const sc = SHICHEN_LIST[scIdx];
+                        if (sc) {
+                          const [h, mi] = sc.value.split(':').map(Number);
+                          updateBirth(idx, { hour: h, minute: mi });
+                        }
+                      }}
                       className="bg-[#2A2018] border border-[#3D3020] rounded-lg px-2 py-2 text-amber-100 text-sm focus:outline-none">
-                      {SHICHEN_LIST.map(sc => <option key={sc.value} value={sc.value}>{sc.label.split('（')[0]} {sc.range}</option>)}
+                      {SHICHEN_LIST.map((sc, i) => (
+                        <option key={i} value={i}>{sc.label.split('（')[0]} {sc.range}</option>
+                      ))}
                     </select>
                     <div className="flex gap-2">
                       {(['男', '女'] as const).map(g => (
