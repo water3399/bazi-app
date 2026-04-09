@@ -33,6 +33,10 @@ export default function FortunePage() {
   const [expandedMonth, setExpandedMonth] = useState<number | null>(null);
   const { langPrompt } = useLang();
 
+  // Life events for verification
+  const [events, setEvents] = useState<Array<{ category: string; detail: string; feeling: 'positive' | 'negative' }>>([]);
+  const [showEventForm, setShowEventForm] = useState(false);
+
   useEffect(() => { setReport(getReport(id)); }, [id]);
   useEffect(() => { if (report) { setFortune(generateYearlyFortune(report.birthData, selectedYear)); setFortuneData(null); setExpandedMonth(null); } }, [report, selectedYear]);
 
@@ -42,7 +46,15 @@ export default function FortunePage() {
     try {
       const chartCtx = formatChartText(report.chartData).substring(0, 3000);
       const fortuneCtx = formatFortuneContext(fortune, report.birthData);
-      const res = await fetch('/api/fortune', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chartContext: `${langPrompt}\n\n${chartCtx}`, fortuneContext: fortuneCtx }) });
+      // Add life events context if any
+      let eventsCtx = '';
+      if (events.length > 0) {
+        eventsCtx = '\n\n===== 用戶提供的真實事件（用來交叉驗證和個人化分析）=====\n' +
+          events.map(e => `• ${e.category}：${e.detail}（${e.feeling === 'positive' ? '正面結果' : '負面結果'}）`).join('\n') +
+          '\n請在分析中結合這些真實事件，解釋為什麼命盤在這一年會出現這些事。如果事件與流年干支吻合，請明確指出吻合之處。';
+      }
+
+      const res = await fetch('/api/fortune', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ chartContext: `${langPrompt}\n\n${chartCtx}${eventsCtx}`, fortuneContext: fortuneCtx }) });
       if (!res.ok) { const d = await res.json(); throw new Error(d.error); }
       const data = await res.json();
       setFortuneData(data.fortune);
@@ -89,13 +101,83 @@ export default function FortunePage() {
         </div>
 
         {fortune && !fortuneData && !analyzing && (
-          <div className="text-center">
-            <div className="bg-amber-950/40 border border-amber-600/30 rounded-xl p-6 mb-6 inline-block">
-              <div className="grid grid-cols-2 gap-6 mb-6">
-                <div className="text-center"><div className="text-amber-500/50 text-xs mb-1">大運</div><div className="text-amber-300 font-bold">{fortune.daYunGanZhi}</div></div>
-                <div className="text-center"><div className="text-amber-500/50 text-xs mb-1">流年</div><div className="text-amber-300 font-bold text-lg">{fortune.liuNianGanZhi}</div><div className="text-amber-500/50 text-xs">{fortune.liuNianAge}歲</div></div>
+          <div>
+            <div className="text-center">
+              <div className="bg-amber-950/40 border border-amber-600/30 rounded-xl p-6 mb-6 inline-block">
+                <div className="grid grid-cols-2 gap-6 mb-6">
+                  <div className="text-center"><div className="text-amber-500/50 text-xs mb-1">大運</div><div className="text-amber-300 font-bold">{fortune.daYunGanZhi}</div></div>
+                  <div className="text-center"><div className="text-amber-500/50 text-xs mb-1">流年</div><div className="text-amber-300 font-bold text-lg">{fortune.liuNianGanZhi}</div><div className="text-amber-500/50 text-xs">{fortune.liuNianAge}歲</div></div>
+                </div>
               </div>
-              <button onClick={handleAnalyze} className="px-10 py-3 rounded-xl bg-gradient-to-r from-amber-600/80 to-yellow-600/80 text-white font-bold">☰ 分析 {selectedYear} 年逐月運勢</button>
+            </div>
+
+            {/* Life Events Input (optional) */}
+            <div className="max-w-xl mx-auto mb-6">
+              <button onClick={() => setShowEventForm(!showEventForm)}
+                className="w-full flex items-center justify-between px-4 py-3 rounded-xl bg-[#1E1810] border border-[#3D3020] hover:border-amber-600/30 transition-all">
+                <div className="flex items-center gap-2">
+                  <span>📝</span>
+                  <span className="text-amber-300 text-sm font-bold">這一年有發生什麼大事嗎？</span>
+                  <span className="text-[#8C7A62] text-xs">（選填，讓分析更精準）</span>
+                </div>
+                <span className="text-[#8C7A62] text-xs">{showEventForm ? '收起 ▲' : '展開 ▼'}</span>
+              </button>
+
+              {showEventForm && (
+                <div className="mt-3 bg-[#1E1810] border border-[#3D3020] rounded-xl p-4 space-y-3">
+                  <p className="text-[#8C7A62] text-xs">填入這一年發生的重大事件，AI 會結合你的真實經歷來分析，讓報告更有針對性。</p>
+
+                  {events.map((evt, i) => (
+                    <div key={i} className="flex items-center gap-2 bg-[#2A2018] rounded-lg p-2">
+                      <span className="text-amber-300 text-xs">{evt.category}</span>
+                      <span className="text-amber-200/60 text-xs flex-1">{evt.detail}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded ${evt.feeling === 'positive' ? 'bg-[#5B9E7A]/20 text-[#5B9E7A]' : 'bg-[#D4856A]/20 text-[#D4856A]'}`}>
+                        {evt.feeling === 'positive' ? '✅ 順利' : '⚠️ 不順'}
+                      </span>
+                      <button onClick={() => setEvents(events.filter((_, j) => j !== i))} className="text-[#8C7A62] text-xs hover:text-red-400">✕</button>
+                    </div>
+                  ))}
+
+                  {/* Add event form */}
+                  {(() => {
+                    const categories = [
+                      { label: '💼 事業', value: '事業' },
+                      { label: '💕 感情', value: '感情' },
+                      { label: '💰 財務', value: '財務' },
+                      { label: '🏥 健康', value: '健康' },
+                      { label: '📚 學業', value: '學業' },
+                      { label: '🏠 家庭', value: '家庭' },
+                      { label: '✈️ 搬遷', value: '搬遷' },
+                    ];
+                    return (
+                      <div className="space-y-2">
+                        <div className="flex flex-wrap gap-1.5">
+                          {categories.map(cat => (
+                            <button key={cat.value}
+                              onClick={() => {
+                                const detail = prompt(`${cat.label} 發生了什麼？（簡短描述）`);
+                                if (detail) {
+                                  const feeling = confirm('這件事的結果是正面的嗎？\n（確定=正面，取消=負面）') ? 'positive' as const : 'negative' as const;
+                                  setEvents([...events, { category: cat.value, detail, feeling }]);
+                                }
+                              }}
+                              className="px-2.5 py-1.5 rounded-lg bg-[#2A2018] border border-[#3D3020] text-amber-400 text-xs hover:border-amber-600/40 transition-all">
+                              {cat.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              )}
+            </div>
+
+            {/* Analyze button */}
+            <div className="text-center">
+              <button onClick={handleAnalyze} className="px-10 py-3 rounded-xl bg-gradient-to-r from-amber-600/80 to-yellow-600/80 text-white font-bold">
+                ☰ 分析 {selectedYear} 年逐月運勢{events.length > 0 ? `（含 ${events.length} 件事件驗證）` : ''}
+              </button>
             </div>
           </div>
         )}
