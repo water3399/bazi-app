@@ -78,7 +78,10 @@ export default function FortunePage() {
 
       <main className="max-w-5xl mx-auto px-4 py-8">
         <h1 className="text-center text-amber-300 text-2xl font-bold mb-2">📅 流年運勢</h1>
-        <p className="text-center text-amber-500/60 text-sm mb-6">日主：{report.chartData.dayMaster}（{report.chartData.dayMasterElement}）</p>
+        <p className="text-center text-amber-500/60 text-sm mb-2">日主：{report.chartData.dayMaster}（{report.chartData.dayMasterElement}）</p>
+        <p className="text-center text-[#8C7A62] text-xs mb-6 max-w-lg mx-auto">
+          🌊 流年分析是你人生的「潮汐表」——它標注的是每個月的能量節奏，不是行程預報。告訴你浪什麼時候來，但衝不衝得到看你自己。
+        </p>
 
         {/* Year selector: dropdown from birth year to +30 */}
         <div className="flex items-center justify-center gap-3 mb-8">
