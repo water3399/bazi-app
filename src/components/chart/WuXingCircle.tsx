@@ -59,13 +59,19 @@ function getXiYong(chart: ChartData): string[] {
 }
 
 export default function WuXingCircle({ chartData }: { chartData: ChartData }) {
-  const pcts = getWuXingPcts(chartData);
+  // 使用專業五行數據（如果有的話）
+  const hasPro = !!chartData.wuXingPro;
+  const pcts = hasPro ? chartData.wuXingPro!.percentages : getWuXingPcts(chartData);
   const dayEl = GAN_WUXING[chartData.dayMaster] || '金';
   const xiYong = getXiYong(chartData);
-  const t = chartData.wuXing.wood + chartData.wuXing.fire + chartData.wuXing.earth + chartData.wuXing.metal + chartData.wuXing.water;
-  const dc = { '金': chartData.wuXing.metal, '木': chartData.wuXing.wood, '水': chartData.wuXing.water, '火': chartData.wuXing.fire, '土': chartData.wuXing.earth }[dayEl] || 0;
-  const r = t > 0 ? dc / t : 0;
-  const strength = r >= 0.35 ? '偏旺型' : r >= 0.2 ? '中和型' : '偏弱型';
+  const strength = hasPro
+    ? `${chartData.wuXingPro!.strength}型`
+    : (() => {
+        const t = chartData.wuXing.wood + chartData.wuXing.fire + chartData.wuXing.earth + chartData.wuXing.metal + chartData.wuXing.water;
+        const dc = { '金': chartData.wuXing.metal, '木': chartData.wuXing.wood, '水': chartData.wuXing.water, '火': chartData.wuXing.fire, '土': chartData.wuXing.earth }[dayEl] || 0;
+        const r = t > 0 ? dc / t : 0;
+        return r >= 0.35 ? '偏旺型' : r >= 0.2 ? '中和型' : '偏弱型';
+      })();
   const relations = WUXING_RELATION[dayEl] || {};
 
   return (
@@ -124,6 +130,21 @@ export default function WuXingCircle({ chartData }: { chartData: ChartData }) {
             style={{ left: `${pos.x+ox}%`, top: `${pos.y}%`, transform: 'translate(-50%,-50%)' }}>{rel}</span>;
         })}
       </div>
+
+      {/* 得令/得地/得生 標記 */}
+      {hasPro && (
+        <div className="flex justify-center gap-3 mb-4">
+          <span className={`text-xs px-2 py-1 rounded-lg border ${chartData.wuXingPro!.deLing ? 'bg-[#5B9E7A]/10 border-[#5B9E7A]/30 text-[#5B9E7A]' : 'bg-[#3D3020] border-[#3D3020] text-[#6B5B3E]'}`}>
+            {chartData.wuXingPro!.deLing ? '✅ 得令' : '❌ 失令'}
+          </span>
+          <span className={`text-xs px-2 py-1 rounded-lg border ${chartData.wuXingPro!.deDi ? 'bg-[#5B9E7A]/10 border-[#5B9E7A]/30 text-[#5B9E7A]' : 'bg-[#3D3020] border-[#3D3020] text-[#6B5B3E]'}`}>
+            {chartData.wuXingPro!.deDi ? '✅ 得地' : '❌ 失地'}
+          </span>
+          <span className={`text-xs px-2 py-1 rounded-lg border ${chartData.wuXingPro!.deSheng ? 'bg-[#5B9E7A]/10 border-[#5B9E7A]/30 text-[#5B9E7A]' : 'bg-[#3D3020] border-[#3D3020] text-[#6B5B3E]'}`}>
+            {chartData.wuXingPro!.deSheng ? '✅ 得生' : '❌ 失生'}
+          </span>
+        </div>
+      )}
 
       {/* 喜用神 */}
       <div className="text-center mb-5">

@@ -91,6 +91,14 @@ export interface ChartData {
   shenGong: string;  // 身宮
   // 五行統計
   wuXing: WuXingCount;
+  // 專業五行分析
+  wuXingPro?: {
+    percentages: Record<string, number>;
+    strength: string;
+    deLing: boolean;
+    deDi: boolean;
+    deSheng: boolean;
+  };
   // 大運
   startAge: number;
   daYun: DaYunPeriod[];

@@ -1,6 +1,7 @@
 import { Solar } from 'lunar-typescript';
 import type { BirthData, ChartData, Pillar, DaYunPeriod, LiuNianData, LiuYueData, WuXingCount } from './types';
 import { toTraditional } from './traditionalChinese';
+import { calculateWuXingScore } from './wuxingScore';
 
 // 天干對應五行
 const GAN_WUXING: Record<string, keyof WuXingCount> = {
@@ -83,6 +84,14 @@ export function generateChart(birthData: BirthData): ChartData {
     yearPillar.zhi, monthPillar.zhi, dayPillar.zhi, hourPillar.zhi,
   );
 
+  // 專業五行計算
+  const wuXingPro = calculateWuXingScore(
+    yearPillar.gan, yearPillar.zhi,
+    monthPillar.gan, monthPillar.zhi,
+    dayPillar.gan, dayPillar.zhi,
+    hourPillar.gan, hourPillar.zhi,
+  );
+
   // 大運
   const genderNum = birthData.gender === '男' ? 1 : 0;
   const yun = bazi.getYun(genderNum);
@@ -153,6 +162,13 @@ export function generateChart(birthData: BirthData): ChartData {
     mingGong: bazi.getMingGong(),
     shenGong: bazi.getShenGong(),
     wuXing,
+    wuXingPro: {
+      percentages: wuXingPro.percentages,
+      strength: wuXingPro.strength,
+      deLing: wuXingPro.deLing,
+      deDi: wuXingPro.deDi,
+      deSheng: wuXingPro.deSheng,
+    },
     startAge: yun.getStartYear(),
     daYun,
     currentDaYun,
