@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { callMiniMax } from '@/lib/minimax';
+import { callOpenRouter, stripThinkBlocks } from '@/lib/openrouter';
 import { ANALYSIS_SYSTEM_PROMPT } from '@/lib/prompts';
 import { buildBaziKnowledge } from '@/lib/bazi/knowledgeLoader';
 
@@ -36,8 +36,8 @@ export async function POST(request: NextRequest) {
       ? `${context}\n\n===== 以下是古典知識庫參考資料（用於輔助分析，不要原文輸出）=====\n\n${knowledgeContext}`
       : context;
 
-    const rawContent = await callMiniMax({
-      model: 'MiniMax-M2.7-highspeed',
+    const rawContent = await callOpenRouter({
+      model: 'z-ai/glm-5.1',
       temperature: 0.3,
       max_tokens: 12000,
       messages: [
