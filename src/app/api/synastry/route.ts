@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     const rawContent = await callMiniMax({
       model: 'MiniMax-M2.7-highspeed',
       temperature: 0.3,
-      max_tokens: 4000,
+      max_tokens: 8000,
       messages: [
         { role: 'system', content: SYNASTRY_PROMPT },
         { role: 'user', content: `根據以下合盤資料，輸出 JSON 格式分析（只輸出 JSON）：\n\n${context}` },
@@ -53,11 +53,18 @@ export async function POST(request: NextRequest) {
 
     const cleaned = rawContent.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
     let analysis;
-    try { analysis = JSON.parse(cleaned); } catch {
-      const m = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/);
-      if (m) analysis = JSON.parse(m[1].trim());
-      else { const s = cleaned.indexOf('{'), e = cleaned.lastIndexOf('}'); if (s >= 0 && e > s) analysis = JSON.parse(cleaned.substring(s, e + 1)); else throw new Error('無法解析'); }
+    const candidates = [
+      cleaned,
+      cleaned.match(/```(?:json)?\s*([\s\S]*?)```/)?.[1]?.trim(),
+      (() => { const s = cleaned.indexOf('{'), e = cleaned.lastIndexOf('}'); return s >= 0 && e > s ? cleaned.substring(s, e + 1) : null; })(),
+    ].filter(Boolean);
+    for (const c of candidates) {
+      if (!c) continue;
+      try { analysis = JSON.parse(c); break; } catch {
+        try { analysis = JSON.parse(c.replace(/,\s*}/g, '}').replace(/,\s*]/g, ']').replace(/[\r\n]+/g, ' ')); break; } catch { continue; }
+      }
     }
+    if (!analysis) throw new Error('AI 回應格式有誤，請重新分析');
     return NextResponse.json({ analysis });
   } catch (error) {
     return NextResponse.json({ error: error instanceof Error ? error.message : '合盤分析失敗' }, { status: 500 });
