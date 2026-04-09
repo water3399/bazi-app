@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { streamOpenRouter } from '@/lib/openrouter';
+import { streamMiniMax } from '@/lib/minimax';
 import { CHAT_SYSTEM_PROMPT } from '@/lib/prompts';
 
 function createThinkStripper(): TransformStream<string, string> {
@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
     const { messages, reportContext } = await request.json();
     if (!messages?.length) return new Response(JSON.stringify({ error: '缺少對話' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
 
-    const stream = streamOpenRouter({
-      model: 'z-ai/glm-5.1',
+    const stream = streamMiniMax({
+      model: 'MiniMax-M2.7-highspeed',
       messages: [
         { role: 'system', content: `${CHAT_SYSTEM_PROMPT}\n\n===== 用戶命盤 =====\n${reportContext}` },
         ...messages,
