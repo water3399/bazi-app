@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
         fortune = JSON.parse(candidate);
         break;
       } catch {
+        // 嘗試基本修復
         try {
           const fixed = candidate
             .replace(/,\s*}/g, '}')
@@ -40,7 +41,27 @@ export async function POST(request: NextRequest) {
             .replace(/"\s+"/g, '","');
           fortune = JSON.parse(fixed);
           break;
-        } catch { continue; }
+        } catch {
+          // JSON 被截斷：補齊缺少的 ] 和 }
+          try {
+            let truncFixed = candidate;
+            // 去掉最後不完整的元素
+            truncFixed = truncFixed.replace(/,\s*\{[^}]*$/, '');
+            truncFixed = truncFixed.replace(/,\s*"[^"]*"?\s*:?\s*"?[^"]*$/, '');
+            truncFixed = truncFixed.replace(/,\s*"[^"]*$/, '');
+
+            const openB = (truncFixed.match(/\[/g) || []).length;
+            const closeB = (truncFixed.match(/\]/g) || []).length;
+            const openC = (truncFixed.match(/\{/g) || []).length;
+            const closeC = (truncFixed.match(/\}/g) || []).length;
+
+            for (let i = 0; i < openB - closeB; i++) truncFixed += ']';
+            for (let i = 0; i < openC - closeC; i++) truncFixed += '}';
+
+            fortune = JSON.parse(truncFixed);
+            break;
+          } catch { continue; }
+        }
       }
     }
 
