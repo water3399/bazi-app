@@ -68,52 +68,25 @@ export default function FortunePage() {
         <h1 className="text-center text-amber-300 text-2xl font-bold mb-2">📅 流年運勢</h1>
         <p className="text-center text-amber-500/60 text-sm mb-6">日主：{report.chartData.dayMaster}（{report.chartData.dayMasterElement}）</p>
 
-        {/* Year selector: birth year to current+5 */}
-        {(() => {
-          const birthYear = report.birthData.year;
-          const endYear = currentYear;
-          const allYears = Array.from({ length: endYear - birthYear + 1 }, (_, i) => birthYear + i);
-          const decades: number[] = [];
-          for (let d = Math.floor(birthYear / 10) * 10; d <= endYear; d += 10) decades.push(d);
-
-          return (
-            <div className="mb-8">
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <span className="text-[#8C7A62] text-xs">年代：</span>
-                {decades.map(d => (
-                  <button key={d} onClick={() => setSelectedYear(Math.max(d, birthYear))}
-                    className={`px-2 py-1 rounded text-[10px] transition-all ${
-                      selectedYear >= d && selectedYear < d + 10
-                        ? 'bg-[#C9A84C]/20 border border-[#C9A84C]/50 text-[#C9A84C]'
-                        : 'bg-amber-950/30 border border-amber-800/20 text-amber-700 hover:border-amber-600/40'
-                    }`}>
-                    {d}s
-                  </button>
-                ))}
-                <button onClick={() => setSelectedYear(currentYear)}
-                  className="px-2 py-1 rounded text-[10px] bg-[#C9A84C]/10 border border-[#C9A84C]/30 text-[#C9A84C]">
-                  📍 今年
-                </button>
-              </div>
-              <div className="overflow-x-auto pb-2">
-                <div className="flex gap-1.5 justify-center flex-wrap max-w-3xl mx-auto">
-                  {allYears.map(y => (
-                    <button key={y} onClick={() => setSelectedYear(y)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                        selectedYear === y
-                          ? 'bg-amber-600/30 border-2 border-amber-500/60 text-amber-300 shadow-lg shadow-amber-900/20'
-                          : y === currentYear
-                            ? 'bg-amber-950/40 border border-amber-600/30 text-amber-400'
-                            : 'bg-amber-950/20 border border-amber-800/20 text-amber-700 hover:border-amber-600/30 hover:text-amber-500'
-                      }`}>
-                      {y}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          );
-        })()}
+        {/* Year selector: dropdown from birth year to +30 */}
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <span className="text-[#8C7A62] text-sm">選擇年份：</span>
+          <select
+            value={selectedYear}
+            onChange={e => setSelectedYear(Number(e.target.value))}
+            className="bg-[#2A2018] border border-[#C9A84C]/40 rounded-lg px-4 py-2.5 text-amber-300 text-sm font-bold focus:border-[#C9A84C] focus:outline-none appearance-none cursor-pointer min-w-[120px] text-center"
+          >
+            {Array.from({ length: (currentYear + 30) - report.birthData.year + 1 }, (_, i) => report.birthData.year + i).map(y => (
+              <option key={y} value={y}>
+                {y}年{y === currentYear ? '（今年）' : ''}
+              </option>
+            ))}
+          </select>
+          <button onClick={() => setSelectedYear(currentYear)}
+            className="px-3 py-2 rounded-lg text-xs bg-[#C9A84C]/10 border border-[#C9A84C]/30 text-[#C9A84C] hover:bg-[#C9A84C]/20">
+            📍 今年
+          </button>
+        </div>
 
         {fortune && !fortuneData && !analyzing && (
           <div className="text-center">
